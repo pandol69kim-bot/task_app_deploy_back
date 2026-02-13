@@ -3,31 +3,24 @@
 const express = require('express');
 const cors = require('cors');
 
-require('dotenv').config(); // .env 환결설정값
+require('dotenv').config(); // .env 변수 설정
 
 const app = express();
+
 app.use(cors()); // 크로스 오리진 설정
 app.use(express.json()); // 제이슨 데이터 파싱
 
-// 라우터 불러오기
-const getRoutes = require('./routes/getRoutes');
-
 // 3. root 설정
 app.get('/', (request, response) => {
-  response.send('This iss the Main App form Deployment');
+  response.send('This is the Main App for Deployment');
 });
 
-// test
-// test
-// test
-// test
-// test
-// test
-
-// 라우터 미들웨어 등록
-app.use('/', getRoutes);
+app.use(require('./routes/getRoutes'));
+app.use(require('./routes/postRoutes'));
+app.use(require('./routes/updateRoutes'));
+app.use(require('./routes/deleteRoutes'));
 
 // 4. listen 설정
 app.listen(process.env.PORT, () => {
-  console.log(`Server is Running in ${process.env.PORT}`);
+  console.log(`Server is Running on port ${process.env.PORT}`);
 });
